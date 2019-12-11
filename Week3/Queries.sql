@@ -1,0 +1,56 @@
+DROP SCHEMA IF EXISTS Online_Trading;
+CREATE SCHEMA Online_Trading;
+USE Online_Trading;
+SET AUTOCOMMIT = 0;
+
+DROP TABLE IF EXISTS `Customers`;
+CREATE TABLE `Customers` (
+  `Customer_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `FirstName` VARCHAR(50) NOT NULL,
+  `LastName` VARCHAR(50) NOT NULL,
+  `Street` VARCHAR(50) NOT NULL,
+  `City` VARCHAR(50) NOT NULL,
+  `Zip` VARCHAR(50) NOT NULL,
+  `Phone` INT(10) NOT NULL,
+  `Order_ID` INT(11) NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY (Order_ID),
+    CONSTRAINT FK_CustOrder FOREIGN KEY (Order_ID)
+    REFERENCES Customer(Customer_ID)
+  );
+  
+  DROP TABLE IF EXISTS `Order`;
+CREATE TABLE `Order` (
+  `Order_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Customer_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `LastName` VARCHAR(50) NOT NULL,
+  `To_Street` VARCHAR(50) NOT NULL,
+  `To_City` VARCHAR(50) NOT NULL,
+  `To_Zip` VARCHAR(50) NOT NULL,
+  `ShipDate` VARCHAR(50) NOT NULL,
+  `Product_ID` INT(11) NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY (Order_ID),
+   FOREIGN KEY (Customer_ID) REFERENCES Customer(Customer_ID)
+  );
+  
+    DROP TABLE IF EXISTS `Products`;
+CREATE TABLE `Products` (
+  `Product_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `QUality` VARCHAR(50) NOT NULL,
+  `Product_type` VARCHAR(50) NOT NULL,
+  `Order_ID` INT(11) NOT NULL AUTO_INCREMENT,
+   PRIMARY KEY (Product_ID),
+   FOREIGN KEY (Order_ID) REFERENCES Order(Order_ID)
+  );
+  
+    DROP TABLE IF EXISTS `Shipment`;
+CREATE TABLE `Shipment` (
+  `Shipment_ID` INT(11) NOT NULL AUTO_INCREMENT,
+  `Product_ID` VARCHAR(50) NOT NULL,
+  `Order_ID` VARCHAR(50) NOT NULL,
+  `ChargedCard` VARCHAR(50) NOT NULL,
+  `PackingTime` VARCHAR(50) NOT NULL,
+  `ShipOrderDate` VARCHAR(50) NOT NULL,
+   PRIMARY KEY (Shipment_ID),
+   FOREIGN KEY (Product_ID) REFERENCES Products(Product_ID)
+
+  );
